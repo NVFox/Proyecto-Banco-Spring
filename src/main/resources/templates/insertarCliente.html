@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario Clientes</title>
+</head>
+<body>
+    <h1>Registrar Clientes</h1>
+    <form th:action="@{/cliente/nuevo}" th:object="${clienteInsert}" method="POST">
+        <input type="text" th:field="*{documento}" name="documento" id="docfield" class="campo" placeholder="documento">
+        <input type="text" th:field="*{nombre}" name="nombre" id="nomfield" class="campo" placeholder="nombre">
+        <input type="text" th:field="*{apellido}" name="apellido" id="apefield" class="campo" placeholder="apellido">
+        <input type="text" th:field="*{correo}" name="correo" id="corfield" class="campo" placeholder="correo">
+        <input type="text" th:field="*{celular}" name="celular" id="celfield" class="campo" placeholder="celular">
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>
