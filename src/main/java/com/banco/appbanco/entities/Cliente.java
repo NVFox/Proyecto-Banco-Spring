@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "clientes")
-public class Cliente {
+public class Cliente extends Tabla {
     @Id
     private long documento;
 
@@ -23,14 +23,10 @@ public class Cliente {
     @Column(name = "Celular", nullable = false, length = 15)
     private String celular;
 
-    public Cliente() {}
-
-    public Cliente(long documento, String nombre, String apellido, String correo, String celular) {
-        this.documento = documento;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.correo = correo;
-        this.celular = celular;
+    public Cliente() {
+        super("clientes", 
+        new String[]{"documento", "nombre", "apellido", "correo", "celular"}, 
+        new String[]{"number", "text", "text", "email", "text"});
     }
 
     public long getDocumento() {
