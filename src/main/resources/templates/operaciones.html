@@ -1,0 +1,160 @@
+<%-- 
+    Document   : creditos
+    Created on : 21/02/2022, 12:30:51 a. m.
+    Author     : usuario
+--%>
+
+<%@page import="modelo.Usuario"%>
+<%@page import="modelo.DatosDAO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="modelo.Tabla"%>
+<%@page import="controlador.Conexion"%>
+<%@page import="java.sql.Connection"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Formulario</title>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&family=Roboto:wght@500&family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+        <link rel="shortcut icon" href="/Imagenes/favicon.ico" type="image/x-icon">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <%
+            HttpSession sesion = request.getSession();
+            DatosDAO data = new DatosDAO();
+            
+            String centerTable = "";
+            String hiddenForm = "form1";
+            Integer ultimoId = data.obtenerUltimoIdOperaciones();
+            Integer nuevoId = ultimoId + 1;
+
+            if (sesion.getAttribute("Usuario") != null) { %>
+        <% Usuario usuario = (Usuario) sesion.getAttribute("Usuario"); %>
+        <link rel="stylesheet" href="css/estilos.css"/>
+
+        <header>
+            <nav>
+                <ul>
+                    <li><h2>Aplicación de Banco</h2></li>
+                        <% if (usuario.getRol().equals("Administrador")) { %>
+                    <li><a href="usuarios.jsp">Usuarios</a></li>
+                        <% } %>
+                        <% if (usuario.getRol().equals("Administrador") || usuario.getRol().equals("Empleado")) { %>
+                    <li><a href="clientes.jsp">Clientes</a></li>
+                        <% }%>
+                    <li><a href="cuentas.jsp">Cuentas</a></li> 
+                    <li><a href="lineas.jsp">Líneas</a></li>
+                    <li><a href="creditos.jsp">Créditos</a></li>
+                    <li><a href="#">Operaciones</a></li>
+                </ul>
+            </nav>
+            <a href="ServletLogoff" class="logout">Cerrar Sesión</a>
+            <a href="perfil.jsp"><%= usuario.getNombreReal()%></a>
+            <img src=<%= usuario.getImagen()%> width="50px" height="45px" style="border-radius: 50%; margin-right: 20px" />
+        </header>
+        
+        <% if (usuario.getRol().matches("(?i)cliente")) {%>
+        <% hiddenForm = "hidden"; %>
+        <% } %>
+
+        <form action="ServletOperaciones" class="form-crud" method="post">
+            <legend id="form-operaciones" class="legend-form">Formulario de Operaciones</legend>
+            
+            <div class=<%= hiddenForm %>>
+                <input type="text" name="CodOp" value=<%= nuevoId %> placeholder="Código de Operación" class="campo" required>
+            </div>
+            
+            <div class="form1">
+                <input type="text" name="CodCuenta" placeholder="Código de Cuenta" class="campo" id="codigo">
+            </div>
+            <div class="form1">
+                <input type="text" name="Operacion" placeholder="Tipo de Operación" class="campo" id="operacion">
+            </div>
+            <div class="form1 hidden" id="codigotransf">
+                <input type="text" name="CodCuentaTransf" placeholder="Cod de Cuenta a la que transferir" id="documento" class="campo" required>
+            </div>
+            <div class="form1">
+                <input type="text" name="OpDinero" placeholder="Dinero para efectuar" class="campo">
+            </div>
+            <button type="submit" class="btn-main" name="btn-main-operaciones">
+                <% if (usuario.getRol().matches("(?i)cliente")) { %>
+                Hacer Operación
+                <% } else { %>
+                Guardar Registro
+                <% } %>
+            </button>
+            <button type="button" class="btn-main btn-consulta" name="btn-consulta">
+                Consultar Registros
+            </button>
+            <% if (usuario.getRol().equals("Administrador") || usuario.getRol().equals("Empleado")) {%>
+            <button type="submit" class="btn-main" name="btn-update-operaciones">
+                Actualizar Registro
+            </button>
+            <button type="submit" class="btn-main" name="btn-delete-operaciones">
+                Borrar Registro
+            </button>
+            <% } %>
+        </form>
+        <%
+            String nombreOriginal = "btn-main-operaciones";
+            String nombreTabla = nombreOriginal.replace("btn-main-", "");
+            String[] camposFinales = new String[]{"CodOp", "CodCuenta", "Operacion", "CodCuentaTransf", "OpDinero", "SalAnterior", "SalActual", "Fecha"};
+            sesion.setAttribute("nombre", nombreTabla);
+            sesion.setAttribute("campos", camposFinales);
+
+            Tabla tabla = data.consultarDatos(nombreTabla, camposFinales, usuario);
+            ArrayList<String[]> valores = tabla.getValoresTotales();
+        %>
+        <table class=<%= centerTable%>>
+            <thead>
+                <tr>
+                    <% for (int i = 0; i < camposFinales.length; i++) {%>
+                    <th><%= camposFinales[i]%></th>
+                        <% } %>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (int i = 0; i < valores.size(); i++) { %>
+                <tr>
+                    <% String[] valoresIndividuales = valores.get(i); %>
+                    <% for (int x = 0; x < valoresIndividuales.length; x++) {%>
+                    <td><%= valoresIndividuales[x]%></td>
+                    <% } %>
+                </tr>
+                <% }%>
+            </tbody>
+        </table>
+
+        <form action="ServletPDF" class="form-pdf" method="POST">
+            <input type="submit" name="pdf-operaciones" value="Generar PDF">
+        </form>
+            
+        <table id="tabla-js" class="tabla-js">
+            <thead>
+                <tr>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+            
+        <script src="js/peticionAjax.js"></script>
+        <script src="js/hiddenRemover.js"></script>
+        <% } else { %>
+        <link rel="stylesheet" href="./css/login.css"/>
+
+        <section>
+            <div class="contenedor">
+                <form action="http://localhost:8080/Prueba">
+                    <div class="log">
+                        <h2>Debe iniciar sesión para continuar</h2>
+                    </div>
+                    <input type="submit" name="btn-login" class="btn-login" value="Iniciar Sesión">
+                </form>
+            </div>
+        </section>
+        <% }%>
+    </body>
+</html>

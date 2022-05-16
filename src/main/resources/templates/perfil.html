@@ -1,0 +1,117 @@
+<%-- 
+    Document   : perfil
+    Created on : 7/03/2022, 1:45:12 p. m.
+    Author     : SENA
+--%>
+
+<%@page import="java.util.ArrayList"%>
+<%@page import="modelo.Usuario"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Actualizar Perfil</title>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&family=Roboto:wght@500&family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <%
+            HttpSession sesion = request.getSession();
+            String[] camposUsuario = new String[]{"NomUsu", "Clave"};
+            String[] camposCliente = new String[]{"DocCli", "NomCli", "ApeCli", "SexoCli", "CorreoCli", "CelularCli", "FechaNacCli"};
+            String[] camposReales = new String[]{"DocCli", "NomUsu", "Clave", "Rol", "Estado", "Imagen"};
+
+            sesion.setAttribute("camposUsuario", camposReales);
+            sesion.setAttribute("camposCliente", camposCliente);
+
+            String[] placeholdersUsuario = new String[]{"Nombre de Usuario", "Clave", "Rol", "Estado"};
+            String[] placeholdersCliente = new String[]{"Documento", "Nombre", "Apellido", "Sexo", "Correo", "Celular", "Fecha de Nacimiento"};
+
+            if (sesion.getAttribute("Usuario") != null) { %>
+        <% Usuario usuario = (Usuario) sesion.getAttribute("Usuario");%>
+        <link rel="stylesheet" href="css/estilos.css"/>
+
+        <header>
+            <nav>
+                <ul>
+                    <li><h2>Aplicación de Banco</h2></li>
+                        <% if (usuario.getRol().equals("Administrador")) { %>
+                    <li><a href="usuarios.jsp">Usuarios</a></li>
+                        <% } %>
+                        <% if (usuario.getRol().equals("Administrador") || usuario.getRol().equals("Empleado")) { %>
+                    <li><a href="clientes.jsp">Clientes</a></li>
+                        <% }%>
+                    <li><a href="cuentas.jsp">Cuentas</a></li> 
+                    <li><a href="lineas.jsp">Líneas</a></li>
+                    <li><a href="creditos.jsp">Créditos</a></li>
+                    <li><a href="operaciones.jsp">Operaciones</a></li>
+                </ul>
+            </nav>
+            <a href="ServletLogoff" class="logout">Cerrar Sesión</a>
+            <p><%= usuario.getNombreReal()%></p>
+            <img src=<%= usuario.getImagen()%> width="50px" height="45px" style="border-radius: 50%; margin-right: 20px" />
+        </header>
+
+        <%
+            String[] valoresUsuario = new String[]{usuario.getNombreUsuario(), "Clave", usuario.getRol(), usuario.getEstado()};
+            String[] nombre = usuario.getNombreReal().split(" ");
+            String[] valoresCliente = new String[]{usuario.getDocumento(), nombre[0], nombre[1], usuario.getSexo(), usuario.getCorreo(),
+                usuario.getCelular(), usuario.getFechaNacimiento()};
+
+            sesion.setAttribute("nombre", "clientes-usuarios");
+        %>
+
+        <form action="ServletPerfil" class="form-perfil" enctype="Multipart/form-data" method="POST">
+            <legend>Información Personal</legend>
+            <div class="input-containers">
+                <div class="image-container">
+                    <img src=<%= usuario.getImagen()%> alt="imagen-perfil"/>
+                    <div class="btn-file">
+                        <p>Subir imagen</p>
+                        <input type="file" name="Imagen" placeholder="Imagen" class="campo">
+                    </div>
+                </div>
+                <div class="user-container">
+                    <% for (int i = 0; i < camposUsuario.length; i++) {%>
+                    <div class="form1">
+                        <label for=<%= camposUsuario[i] + i%>><%= placeholdersUsuario[i]%></label>
+                        <input type="text" name=<%= camposUsuario[i]%> placeholder=<%= valoresUsuario[i]%> class="campo" 
+                               id=<%= camposUsuario[i] + i%>>
+                    </div>               
+                    <% } %>
+                </div>
+                <div class="client-container">
+                    <% for (int i = 0; i < camposCliente.length; i++) {%>
+                    <div class="form1">
+                        <label for=<%= camposCliente[i] + i%>><%= placeholdersCliente[i]%></label>
+                        <% if (i == 0) {%>
+                        <input type="text" name=<%= camposCliente[i]%> class="campo" value=<%= valoresCliente[i]%>
+                               id=<%= camposCliente[i] + i%> disabled>
+                        <% } else {%>
+                        <input type="text" name=<%= camposCliente[i]%> placeholder=<%= valoresCliente[i]%> class="campo" 
+                               id=<%= camposCliente[i] + i%>>
+                        <% } %>
+                    </div>               
+                    <% } %>
+                </div>
+            </div>
+            <button type="submit" class="btn-main" name="btn-update-clientes-usuarios">
+                Actualizar Datos
+            </button>
+        </form>
+        <% } else { %>
+        <link rel="stylesheet" href="./css/login.css"/>
+
+        <section>
+            <div class="contenedor">
+                <form action="http://localhost:8080/Prueba">
+                    <div class="log">
+                        <h2>Debe iniciar sesión para continuar</h2>
+                    </div>
+                    <input type="submit" name="btn-login" class="btn-login" value="Iniciar Sesión">
+                </form>
+            </div>
+        </section>
+        <% }%>
+    </body>
+</html>

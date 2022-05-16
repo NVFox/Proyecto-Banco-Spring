@@ -1,0 +1,379 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 18/02/2022, 1:50:32 p. m.
+    Author     : SENA
+*/
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a{
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+body{
+    background: linear-gradient(to top, rgb(206, 229, 208) 20%, rgb(243, 240, 215) 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    background: rgb(216, 179, 132);
+}
+
+header h2, legend {
+    font-family: 'Montserrat', sans-serif;
+}
+
+legend {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header p, header a {
+    font-size: 20px;
+    font-family: 'Ubuntu', sans-serif;
+    margin: auto 15px auto 0;
+    color: black
+}
+
+nav {
+    margin-left: 15px;
+}
+
+nav > ul {
+    display: flex;
+    align-items: center;
+}
+
+nav > ul > li {
+    list-style: none;
+    font-family: 'Montserrat', sans-serif;
+    height: fit-content;
+    margin-right: 25px;
+}
+
+.contenedor{
+    max-width: 83%;
+    float: right;
+}
+
+.btn-menu{
+    position: relative;
+    float: right;
+    padding-top: 20px;
+    padding-right: 20px;
+}
+
+.usrn{
+    padding-top: 20px;
+    padding-right: 20px;
+}
+
+.btn-menu a i{
+    text-align: right;
+    font-size: 30px;
+    color: black;
+}
+
+.usrn p{
+    font-size: 25px;
+    text-transform: uppercase;
+    color: black;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.usrn a{
+    text-decoration: none;
+}
+
+.logout{
+    margin: 22px 20px 22px auto;
+    padding: 5px;
+    color: black;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: 'Ubuntu', sans-serif;
+    background: rgb(216, 179, 132);
+    border-radius: 3px;
+    border: 1px solid black;
+}
+
+.logout:hover{
+    box-shadow: 1px 1px 3px black;
+}
+
+.menu-princ{
+    display: flex;
+    flex-flow: row-reverse nowrap;
+    background: rgba(0, 0, 0, .2);
+    width: 100%;
+    height: 10vh;
+    box-shadow: 1px 1px 3px black;
+}
+
+.menuctx{
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    padding-top: 20px;
+    padding-left: 20px;
+}
+
+.menuctx h2{
+    font-size: 50px;
+    padding-bottom: 20px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.menuctx h2 i{
+    padding-right: 15px;
+}
+
+.menuctx p{
+    font-family: 'Roboto', sans-serif;
+}
+
+legend {
+    font-size: 40px;
+}
+
+.form-crud{
+    margin: 50px auto;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background: white;
+    padding: 50px 0;
+    box-shadow: 0 0 0.5pc gray;
+    border-radius: 5px;
+}
+
+.form-perfil{
+    margin: 50px auto;
+    width: 85%;
+    background: white;
+    padding: 50px 0;
+    box-shadow: 0 0 0.5pc gray;
+    border-radius: 5px;
+}
+
+.form-perfil > .btn-main {
+    display: flex;
+    margin: 15px auto 0;
+}
+
+.input-containers{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+label {
+    font-family: 'Montserrat', 'sans-serif';
+}
+
+.form-pdf{
+    margin: 0 auto 30px auto;
+}
+
+table{
+    width: 90%;
+    margin: 0 auto 30px;
+}
+
+.center-table{
+    margin: auto;
+}
+
+td{
+    padding: 5px;
+    border: 1px solid black;
+    font-family: 'Roboto', sans-serif;
+    border-radius: 2px;
+    text-align: center;
+    background: white;
+}
+
+td > input {
+    width: 120px;
+}
+
+td a:hover{
+    color: black;
+    transition: ease-in 200ms;
+}
+
+th{
+    padding: 5px;
+    border: 1px solid black;
+    font-family: 'Ubuntu', sans-serif;
+    background: linear-gradient(to top, rgb(94, 69, 75) 0%, rgb(216, 179, 132) 100%);
+    border-radius: 3px;
+}
+
+.form1{
+    padding-bottom: 20px;
+    width: 210px;
+    display: flex;
+    justify-content: center;
+}
+
+.form1 > *{
+    width: 100%;
+}
+
+input{
+    padding: 10px;
+    border-radius: 5px;
+    font-family: 'Montserrat', sans-serif;
+    width: 100%;
+}
+
+.btn-file{
+    padding: 10px;
+    position: relative;
+    text-align: center;
+    border-radius: 5px;
+    background: rgb(216, 179, 132);
+    border: 1px solid black;
+}
+
+.btn-file > p {
+    font-family: "Montserrat", sans-serif;
+}
+
+.btn-file > input{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    top: 0px;
+    right: 0px;
+}
+
+.image-container {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-container, .client-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-container {
+    width: 25%;
+}
+
+.client-container {
+    width: 40%;
+}
+
+.image-container > .btn-file {
+    width: 200px;
+}
+
+.image-container > img {
+    width: 65%;
+    margin-bottom: 30px;
+}
+
+select{
+    padding: 10px 30px 10px 10px;
+    border-radius: 5px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.btn-main{
+    padding: 10px;
+    border-radius: 5px;
+    font-family: 'Montserrat', sans-serif;
+    margin: 15px 0 0;
+}
+
+.cont-menu{
+    width: 100%;
+    max-width: 17%;
+    background:  linear-gradient(to top, rgb(94, 69, 75) 20%, rgb(216, 179, 132) 100%);
+    height: 100vh;
+    position: fixed;
+    box-shadow: 1px 1px 3px black
+}
+
+.cont-menu nav{
+    padding-bottom: 20px ;
+    padding-top: 20px;
+}
+
+.cont-menu nav > *{
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+    text-decoration: none;
+    padding: 25px;
+    color: black;
+    border-left: 5px solid transparent;
+    font-size: 20px;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.cont-menu nav p i{
+    font-size: 150px;
+    text-align: center;
+}
+
+.copy{
+    margin-top: 31vh;
+}
+
+.copy p{
+    font-size: 15px;
+    text-align: center;
+    color: white
+}
+
+.copy1{
+    margin-top: 40vh;
+}
+
+.copy1 p{
+    font-size: 15px;
+    text-align: center;
+    color: white
+}
+
+.copy2{
+    margin-top: 21vh;
+}
+
+.copy2 p{
+    font-size: 15px;
+    text-align: center;
+    color: white
+}
+
+.cont-menu nav a:hover{
+    border-left: 5px solid white;
+    background: rgba(31, 31, 31, .5);
+    transition: all 400ms;
+    color: white;
+}
+
+.hidden{
+    display: none;
+}

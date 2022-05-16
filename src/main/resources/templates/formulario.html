@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title th:text="@{'Formulario de ' + ${objeto.nombreTabla}}"></title>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&family=Roboto:wght@500&family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <link rel="stylesheet" th:href="@{/css/estilos.css}"/>
+
+        <div th:replace="fragments/header.html :: header"></div>
+
+        <form class="form-crud" enctype="Multipart/form-data" >
+            <legend th:id="@{'form-' + ${objeto.nombreTabla}}" class="legend-form" th:text="@{'Formulario de ' + ${objeto.nombreTabla}}"></legend>
+            <div class="form1" th:each="campo:${objeto.campos}">
+                <div th:if="${campo == 'imagen'}">
+                    <div class="btn-file">
+                        <p>Subir imagen</p>
+                        <input type="file" th:name="${campo}" placeholder="Ingrese su imagen" class="campo">
+                    </div>
+                </div>
+                <div th:unless="${campo == 'imagen'}">
+                    <input th:type="${objeto.tipos[campoStat.index]}" th:name="${campo}" th:placeholder="@{'Ingrese su ' + ${campo}}" class="campo" required>
+                </div>
+            </div>
+            <button type="button" class="btn-main btn-consulta" th:name="@{'btn-consulta-' + ${objeto.nombreTabla}}">
+                Consultar Registros
+            </button>
+            <button type="button" class="btn-main btn-insertar" th:name="@{'btn-insertar-' + ${objeto.nombreTabla}}">
+                Insertar Registro AJAX
+            </button>
+            <button type="button" class="btn-main btn-actualizar" th:name="@{'btn-actualizar-' + ${objeto.nombreTabla}}">
+                Actualizar Registro AJAX
+            </button>
+            <button type="button" class="btn-main btn-eliminar" th:name="@{'btn-eliminar-' + ${objeto.nombreTabla}}">
+                Eliminar Registro AJAX
+            </button>
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th th:each="campo:${objeto.campos}" th:text="${campo.substring(0, 1).toUpperCase + campo.substring(1)}"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="objeto:${objetos}">
+                    <td th:each="campo:${objeto.campos}">
+                        <div th:if="${campo == 'imagen'}">
+                            <img th:src="${objeto[campo]}" alt="imagen-perfil" width="100px" />
+                        </div>
+                        <div th:unless="${campo == 'imagen'}" th:text="${objeto[campo]}"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <form action="ServletPDF" class="form-pdf" method="POST">
+            <input type="submit" name="pdf-usuarios" value="Generar PDF">
+        </form>
+            
+        <table id="tabla-js" class="tabla-js">
+            <thead>
+                <tr>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+            
+        <script src="js/peticionAjax.js"></script>
+    </body>
+</html>
