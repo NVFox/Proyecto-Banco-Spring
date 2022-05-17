@@ -6,6 +6,8 @@ $(document).ready(function () {
 
     const listaElementos = [].slice.call(document.querySelectorAll(".campo"));
 
+    const formulario = document.getElementById("form-objeto");
+
     function convertirAObjeto(lista) {
         const objeto = {
             tabla: nombreTabla
@@ -16,9 +18,7 @@ $(document).ready(function () {
     }
 
     function convertirObjetoValores(lista) {
-        const objeto = {
-            tabla: nombreTabla
-        };
+        const objeto = {};
         lista.map(item => objeto[item.name] = item.value === "" ? null : `${item.value}`);
 
         return objeto;
@@ -72,25 +72,24 @@ $(document).ready(function () {
         });
     });
     
-    function doPost() {
+    function realizarPeticion(tipo, url) {
         console.log(convertirObjetoValores(listaElementos));
 
-        $.ajax({
-            type: "POST",
-            url: "ServletConsultaJS",
-            data: convertirObjetoValores(listaElementos)
-        });
+        formulario.method = tipo;
+        formulario.action = formulario.action + url
+        formulario.submit()
     }
 
     $(".btn-insertar").click(function () {
-        doPost();
+        realizarPeticion("POST", "registro");
     });
     
     $(".btn-actualizar").click(function () {
-        doPost();
+        realizarPeticion("POST", "actualizar")
     });
     
     $(".btn-eliminar").click(function() {
-        doPost();
+        const data = convertirObjetoValores(listaElementos);
+        realizarPeticion("GET", `eliminar/${data[Object.keys(data)[0]]}`)
     });
 });

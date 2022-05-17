@@ -1,9 +1,6 @@
 package com.banco.appbanco.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "usuarios")
@@ -25,6 +22,10 @@ public class Usuario extends Tabla {
 
     @Column(name = "Imagen", nullable = false, length = 255)
     private String imagen;
+
+    @ManyToOne
+    @JoinColumn(name = "documento_us")
+    private Cliente cliente;
 
     public Usuario() {
         super("usuarios", 

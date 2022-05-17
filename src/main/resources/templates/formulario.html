@@ -11,7 +11,7 @@
 
         <div th:replace="fragments/header.html :: header"></div>
 
-        <form class="form-crud" enctype="Multipart/form-data" >
+        <form class="form-crud" th:action="@{${objeto.nombreTabla} + '/'}" id="form-objeto" enctype="Multipart/form-data" th:object="${objeto}" >
             <legend th:id="@{'form-' + ${objeto.nombreTabla}}" class="legend-form" th:text="@{'Formulario de ' + ${objeto.nombreTabla}}"></legend>
             <div class="form1" th:each="campo:${objeto.campos}">
                 <div th:if="${campo == 'imagen'}">
@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div th:unless="${campo == 'imagen'}">
-                    <input th:type="${objeto.tipos[campoStat.index]}" th:name="${campo}" th:placeholder="@{'Ingrese su ' + ${campo}}" class="campo" required>
+                    <input th:type="${objeto.tipos[campoStat.index]}" th:field="*{__${campo}__}" th:name="${campo}" th:placeholder="@{'Ingrese su ' + ${campo}}" class="campo" required>
                 </div>
             </div>
             <button type="button" class="btn-main btn-consulta" th:name="@{'btn-consulta-' + ${objeto.nombreTabla}}">
