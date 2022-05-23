@@ -15,7 +15,7 @@ public class Accessors {
         this.newAccessor = PropertyAccessorFactory.forBeanPropertyAccess(newData);
 
         for (String campo : prevData.getCampos()) {
-            if (newAccessor.getPropertyValue(campo) != null && !newAccessor.getPropertyValue(campo).equals("")) {
+            if (newAccessor.getPropertyValue(campo) != null && !newAccessor.getPropertyValue(campo).equals("") && !newAccessor.getPropertyValue(campo).equals(0)) {
                 prevAccessor.setPropertyValue(campo, newAccessor.getPropertyValue(campo));
             }
         }

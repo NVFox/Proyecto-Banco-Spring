@@ -45,7 +45,6 @@ public class ControllerCliente implements ControllerInterface {
     }
 
     @GetMapping("clientes/eliminar/{id}")
-    @Override
     public String eliminarDato(@PathVariable Long id) {
         servicio.eliminarCliente(id);
         return REDIRECT_URL;

@@ -9,7 +9,5 @@ import org.springframework.ui.Model;
 public interface ControllerInterface {
     public String listarDatos(Model modelo);
 
-    public String eliminarDato(Long id);
-
     public List<Tabla> listarDatosJSON();
 }

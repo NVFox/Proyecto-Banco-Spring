@@ -3,9 +3,9 @@ package com.banco.appbanco.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.banco.appbanco.entities.Usuario;
+import com.banco.appbanco.entities.Cuenta;
 import com.banco.appbanco.entities.Tabla;
-import com.banco.appbanco.services.UsuarioService;
+import com.banco.appbanco.services.CuentaService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,45 +17,45 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class ControllerUsuario implements ControllerInterface {
+public class ControllerCuenta implements ControllerInterface {
 
     @Autowired
-    UsuarioService servicio;
+    CuentaService servicio;
 
-    private static final String REDIRECT_URL = "redirect:/usuarios";
+    private static final String REDIRECT_URL = "redirect:/cuentas";
 
-    @GetMapping("usuarios")
+    @GetMapping("cuentas")
     @Override
     public String listarDatos(Model modelo) {
-        modelo.addAttribute("objeto", new Usuario());
-        modelo.addAttribute("objetos", servicio.listarUsuarios());
+        modelo.addAttribute("objeto", new Cuenta());
+        modelo.addAttribute("objetos", servicio.listarCuentas());
         return "formulario";
     }
 
-    @PostMapping("usuarios/registro")
-    public String insertarDato(@ModelAttribute("objeto") Usuario tabla) {
-        servicio.guardarUsuario(tabla);
+    @PostMapping("cuentas/registro")
+    public String insertarDato(@ModelAttribute("objeto") Cuenta tabla) {
+        servicio.guardarCuenta(tabla);
         return REDIRECT_URL;
     }
 
-    @PostMapping("usuarios/actualizar")
-    public String actualizarDato(@ModelAttribute("objeto") Usuario tabla) {
-        servicio.actualizarUsuario(tabla);
+    @PostMapping("cuentas/actualizar")
+    public String actualizarDato(@ModelAttribute("objeto") Cuenta tabla) {
+        servicio.actualizarCuenta(tabla);
         return REDIRECT_URL;
     }
 
-    @GetMapping("usuarios/eliminar/{id}")
-    public String eliminarDato(@PathVariable Long id) {
-        servicio.eliminarUsuario(id);
+    @GetMapping("cuentas/eliminar/{id}")
+    public String eliminarDato(@PathVariable String id) {
+        servicio.eliminarCuenta(id);
         return REDIRECT_URL;
     }
 
-    @GetMapping("usuarios/tabla")
+    @GetMapping("cuentas/tabla")
     @ResponseBody
     @Override
     public List<Tabla> listarDatosJSON() {
         List<Tabla> lista = new ArrayList<>();
-        lista.addAll(servicio.listarUsuarios());
+        lista.addAll(servicio.listarCuentas());
         return lista;
     }
 }

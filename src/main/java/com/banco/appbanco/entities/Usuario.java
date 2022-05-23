@@ -24,13 +24,13 @@ public class Usuario extends Tabla {
     private String imagen;
 
     @ManyToOne
-    @JoinColumn(name = "documento_us")
-    private Cliente cliente;
+    @JoinColumn(name = "DocumentoCliente")
+    private Cliente clienteDocumento;
 
     public Usuario() {
         super("usuarios", 
-        new String[]{"documento", "nombre", "rol", "estado", "imagen"}, 
-        new String[]{"number", "text", "text", "text", "file"});
+        new String[]{"documento", "nombre", "rol", "estado", "imagen", "clienteDocumento"}, 
+        new String[]{"number", "text", "text", "text", "text", "number"});
     }
 
     public long getDocumento() {
@@ -80,4 +80,13 @@ public class Usuario extends Tabla {
     public void setImagen(String imagen) {
         this.imagen = imagen;
     }
+
+    public Cliente getClienteDocumento() {
+        return clienteDocumento;
+    }
+
+    public void setClienteDocumento(Cliente clienteDocumento) {
+        this.clienteDocumento = clienteDocumento;
+    }
+
 }

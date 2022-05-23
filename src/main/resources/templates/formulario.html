@@ -14,13 +14,13 @@
         <form class="form-crud" th:action="@{${objeto.nombreTabla} + '/'}" id="form-objeto" enctype="Multipart/form-data" th:object="${objeto}" >
             <legend th:id="@{'form-' + ${objeto.nombreTabla}}" class="legend-form" th:text="@{'Formulario de ' + ${objeto.nombreTabla}}"></legend>
             <div class="form1" th:each="campo:${objeto.campos}">
-                <div th:if="${campo == 'imagen'}">
+                <div th:if="${objeto.tipos[campoStat.index] == 'file'}">
                     <div class="btn-file">
                         <p>Subir imagen</p>
                         <input type="file" th:name="${campo}" placeholder="Ingrese su imagen" class="campo">
                     </div>
                 </div>
-                <div th:unless="${campo == 'imagen'}">
+                <div th:unless="${objeto.tipos[campoStat.index] == 'file'}">
                     <input th:type="${objeto.tipos[campoStat.index]}" th:field="*{__${campo}__}" th:name="${campo}" th:placeholder="@{'Ingrese su ' + ${campo}}" class="campo" required>
                 </div>
             </div>
@@ -46,10 +46,10 @@
             <tbody>
                 <tr th:each="objeto:${objetos}">
                     <td th:each="campo:${objeto.campos}">
-                        <div th:if="${campo == 'imagen'}">
+                        <div th:if="${{objeto.tipos[campoStat.index] == 'file'}">
                             <img th:src="${objeto[campo]}" alt="imagen-perfil" width="100px" />
                         </div>
-                        <div th:unless="${campo == 'imagen'}" th:text="${objeto[campo]}"></div>
+                        <div th:unless="${objeto.tipos[campoStat.index] == 'file'}" th:text="${objeto[campo]}"></div>
                     </td>
                 </tr>
             </tbody>

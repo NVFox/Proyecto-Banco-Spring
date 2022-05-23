@@ -36,9 +36,10 @@ $(document).ready(function () {
     $(".btn-consulta").click(function () {
         $.ajax({
             type: "GET",
-            url: "clientes/tabla",
+            url: `${nombreTabla}/tabla`,
             success: function (data) {
                 data = obtenerObjetoFinal(convertirAObjeto(listaElementos), data);
+                console.log(data);
                 document.querySelector("#tabla-js > thead > tr").innerHTML = "";
                 document.querySelector("#tabla-js > tbody").innerHTML = "";
 
